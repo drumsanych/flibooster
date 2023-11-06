@@ -1,22 +1,21 @@
 package org.flibooster.controller;
 
 import lombok.AllArgsConstructor;
-import org.flibooster.services.HTMLParser;
-import org.springframework.stereotype.Controller;
+import org.flibooster.services.FlibustaRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 
-@Controller
+@org.springframework.stereotype.Controller
 @AllArgsConstructor
-public class Contoller {
-    private HTMLParser htmlParser;
+public class Controller {
+    private FlibustaRepository htmlParser;
 
     @GetMapping("/")
     public String getMainPage(@RequestParam(required = false) String search) throws IOException {
         if (search != null) {
-            htmlParser.printHTML(search);
+            htmlParser.searchBooks(search);
         }
         return "index";
     }
