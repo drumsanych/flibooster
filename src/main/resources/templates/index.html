@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="/css/main.css" media="screen">
     <script class="u-script" type="text/javascript" src="/js/jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="/js/flibooster.js" defer=""></script>
+    <script type="text/javascript" src="/js/fetch.js" defer=""></script>
     <meta name="generator" content="">
     
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
@@ -26,18 +27,18 @@
     <meta property="og:title" content="Главная">
     <meta property="og:type" content="website">
   <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
-  <body data-home-page="Главная.html" data-home-page-title="Главная" data-path-to-root="./" data-include-products="false" class="u-body u-custom-color-1 u-stick-footer u-xl-mode" data-lang="ru"><header class="u-clearfix u-custom-color-2 u-header" id="sec-6ec2" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><div class="u-clearfix u-sheet u-sheet-1">
+  <body data-home-page="/" data-home-page-title="Главная" data-path-to-root="./" data-include-products="false" class="u-body u-custom-color-1 u-stick-footer u-xl-mode" data-lang="ru"><header class="u-clearfix u-custom-color-2 u-header" id="sec-6ec2" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><div class="u-clearfix u-sheet u-sheet-1">
         <a href="https://boosty.to/flibooster" class="u-hover-feature u-image u-logo u-image-1" data-image-width="1014" data-image-height="1011">
           <img src="/images/IMG_5629.png" class="u-logo-image u-logo-image-1">
         </a>
-        <form action="#" method="get" class="u-border-1 u-border-grey-30 u-custom-color-3 u-search u-search-right u-search-1">
-          <button class="u-search-button" type="submit">
+        <form action="#" class="u-border-1 u-border-grey-30 u-custom-color-3 u-search u-search-right u-search-1">
+          <button class="u-search-button" type="submit" onclick="sendGetRequest()">
             <span class="u-search-icon u-spacing-10">
               <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 56.966 56.966"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-06a4"></use></svg>
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg-06a4" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" class="u-svg-content"><path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"></path></svg>
             </span>
           </button>
-          <input class="u-search-input" type="search" name="search" value="" placeholder="Search">
+          <input id="searchInput" class="u-search-input" type="search" name="search" value="" placeholder="Поиск" >
         </form>
         <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
           <div class="menu-collapse u-custom-font" style="font-size: 1.5rem; letter-spacing: 0px; font-family: &quot;Metal Mania&quot;;">
@@ -67,21 +68,21 @@
         <h2 class="u-custom-font u-text u-text-custom-color-5 u-text-default u-text-1">flibooster​.org</h2>
       </div></header>
     <section class="u-clearfix u-custom-color-2 u-section-1" id="sec-2692">
-      <div class="u-clearfix u-sheet u-sheet-1">
+      <div id="booksTab" style="visibility: hidden" class="u-clearfix u-sheet u-sheet-1">
         <div class="u-expanded-width u-list u-list-1">
           <div class="u-repeater u-repeater-1">
-            <div class="u-container-style u-custom-color-2 u-list-item u-repeater-item u-video-cover u-list-item-1">
-              <div class="u-container-layout u-similar-container u-container-layout-1">
-                <img alt="" class="custom-expanded u-image u-image-contain u-image-default u-image-1" data-image-width="512" data-image-height="512" src="/images/free-icon-spellbook-7778743.png">
-                <h4 class="u-custom-font u-text u-text-default u-text-1">Михаил Юрьевич Лермонтов</h4>
-                <p class="u-custom-font u-text u-text-default u-text-2">Герой настоящего времени</p>
-                  <img class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-7" src="/images/icons8-pdf-2-50-2.png" alt="" data-image-width="50" data-image-height="50">
-                <img class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-3" src="/images/icons8-epub-50-2.png" alt="" data-image-width="50" data-image-height="50">
-                <img class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-4" src="/images/icons8-fb-2-50-2.png" alt="" data-image-width="50" data-image-height="50">
-                <img class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-5" src="/images/icons8-mobi-50-2.png" alt="" data-image-width="50" data-image-height="50">
+            <div id="container1" class="u-container-style u-custom-color-2 u-list-item u-repeater-item u-video-cover u-list-item-1">
+<!--              <div class="u-container-layout u-similar-container u-container-layout-1">-->
+<!--                <img alt="" class="custom-expanded u-image u-image-contain u-image-default u-image-1" data-image-width="512" data-image-height="512" src="/images/free-icon-spellbook-7778743.png">-->
+<!--                <h4 class="u-custom-font u-text u-text-default u-text-1">Михаил Юрьевич Лермонтов</h4>-->
+<!--                <p class="u-custom-font u-text u-text-default u-text-2">Герой настоящего времени</p>-->
+<!--                  <img class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-7" src="/images/icons8-pdf-2-50-2.png" alt="" data-image-width="50" data-image-height="50">-->
+<!--                <img class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-3" src="/images/icons8-epub-50-2.png" alt="" data-image-width="50" data-image-height="50">-->
+<!--                <img class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-4" src="/images/icons8-fb-2-50-2.png" alt="" data-image-width="50" data-image-height="50">-->
+<!--                <img class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-5" src="/images/icons8-mobi-50-2.png" alt="" data-image-width="50" data-image-height="50">-->
               </div>
-            </div>
-            <div class="u-container-style u-custom-color-2 u-list-item u-repeater-item u-video-cover u-list-item-2">
+<!--            </div>-->
+            <div id="container2" class="u-container-style u-custom-color-2 u-list-item u-repeater-item u-video-cover u-list-item-2">
 <!--              <div class="u-container-layout u-similar-container u-container-layout-2">-->
 <!--                <img alt="" class="custom-expanded u-image u-image-contain u-image-default u-image-6" src="/images/free-icon-spellbook-7778743.png" data-image-width="512" data-image-height="512">-->
 <!--                <h4 class="u-custom-font u-text u-text-default u-text-3">Книга 2</h4>-->
@@ -92,7 +93,7 @@
 <!--                <img class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-10" src="/images/icons8-mobi-50-2.png" alt="" data-image-width="50" data-image-height="50">-->
 <!--              </div>-->
             </div>
-            <div class="u-container-style u-custom-color-2 u-list-item u-repeater-item u-list-item-3">
+            <div id="container3" class="u-container-style u-custom-color-2 u-list-item u-repeater-item u-list-item-3">
 <!--              <div class="u-container-layout u-similar-container u-container-layout-3">-->
 <!--                <img alt="" class="custom-expanded u-image u-image-contain u-image-default u-image-11" src="/images/free-icon-spellbook-7778743.png" data-image-width="512" data-image-height="512">-->
 <!--                <h4 class="u-custom-font u-text u-text-default u-text-5">Книга 3</h4>-->
@@ -105,9 +106,9 @@
             </div>
           </div>
         </div>
-        <a href="https://boosty.to/flibooster" class="u-btn u-button-style u-custom-color-3 u-hover-custom-color-9 u-hover-feature u-text-hover-custom-color-5 u-btn-1">Вперед​&nbsp;<span class="u-file-icon u-icon u-text-grey-5"><img src="/images/png-transparent-computer-icons-arrow-icon-right-arrow-angle-text-triangle-PhotoRoom.png-PhotoRoom-0269d938.png" alt=""></span>
+        <a href="#"  onclick="forward()" class="u-btn u-button-style u-custom-color-3 u-hover-custom-color-9 u-hover-feature u-text-hover-custom-color-5 u-btn-1">Вперед​&nbsp;<span class="u-file-icon u-icon u-text-grey-5"><img src="/images/png-transparent-computer-icons-arrow-icon-right-arrow-angle-text-triangle-PhotoRoom.png-PhotoRoom-0269d938.png" alt="" ></span>
         </a>
-        <a href="https://boosty.to/flibooster" class="u-btn u-button-style u-custom-color-3 u-hover-custom-color-9 u-hover-feature u-text-hover-custom-color-5 u-btn-2"><span class="u-file-icon u-icon u-text-palette-1-light-3"><img src="/images/png-transparent-computer-icons-a-174ea8a5.png" alt=""></span>&nbsp;Назад
+        <a href="#"  onclick="back()" class="u-btn u-button-style u-custom-color-3 u-hover-custom-color-9 u-hover-feature u-text-hover-custom-color-5 u-btn-2"><span class="u-file-icon u-icon u-text-palette-1-light-3"><img src="/images/png-transparent-computer-icons-a-174ea8a5.png" alt="" ></span>&nbsp;Назад
         </a>
       </div>
       
