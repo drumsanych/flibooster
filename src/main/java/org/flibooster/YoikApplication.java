@@ -1,4 +1,4 @@
-package net.yokniga.yoik;
+package org.flibooster;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

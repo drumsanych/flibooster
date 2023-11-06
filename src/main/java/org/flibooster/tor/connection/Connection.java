@@ -1,4 +1,4 @@
-package net.yokniga.yoik.tor.connection;
+package org.flibooster.tor.connection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

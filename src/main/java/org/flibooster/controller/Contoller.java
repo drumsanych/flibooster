@@ -1,7 +1,7 @@
-package net.yokniga.yoik.controller;
+package org.flibooster.controller;
 
 import lombok.AllArgsConstructor;
-import net.yokniga.yoik.services.HTMLParser;
+import org.flibooster.services.HTMLParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +18,7 @@ public class Contoller {
         if (search != null) {
             htmlParser.printHTML(search);
         }
-        return "main";
+        return "index";
     }
 
     @GetMapping("/about")

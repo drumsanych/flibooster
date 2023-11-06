@@ -1,4 +1,4 @@
-package net.yokniga.yoik;
+package org.flibooster;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

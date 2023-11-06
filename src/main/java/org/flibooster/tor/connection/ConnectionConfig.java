@@ -1,4 +1,4 @@
-package net.yokniga.yoik.tor.connection;
+package org.flibooster.tor.connection;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
