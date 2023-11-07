@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
@@ -37,7 +34,7 @@ public class RestController {
 
 
     @GetMapping("/download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam("href") String href) throws FileNotFoundException {
+    public ResponseEntity<Resource> downloadFile(@RequestParam("href") String href) throws IOException {
         File file = flibustaService.getFileByUrl(href);
         Resource resource = new InputStreamResource(new FileInputStream(file));
         return ResponseEntity.ok()

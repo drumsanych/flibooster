@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface FlibustaService {
-    File getFileByUrl(String url) throws FileNotFoundException;
+    File getFileByUrl(String url) throws IOException;
     List<Book> getBooksList(String request) throws IOException;
 
 }

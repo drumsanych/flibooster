@@ -1,7 +1,7 @@
 package org.flibooster.controller;
 
 import lombok.AllArgsConstructor;
-import org.flibooster.services.FlibustaRepository;
+import org.flibooster.repository.FlibustaRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
