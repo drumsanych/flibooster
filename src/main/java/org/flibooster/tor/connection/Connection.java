@@ -15,11 +15,10 @@ public class Connection {
     @Value("${app.flibusta.url}")
     private String flibustaUrl;
 
-    @Autowired
     private Proxy proxy;
 
-    public URLConnection getConnection(URL url) throws IOException {
-        return url.openConnection(proxy);
+    public Connection(@Autowired Proxy proxy) {
+        this.proxy = proxy;
     }
 
     public URLConnection getConnection() throws IOException {
@@ -27,6 +26,7 @@ public class Connection {
     }
 
     public URLConnection getConnection(String apiUrl) throws IOException {
+        if (apiUrl.startsWith("/")) apiUrl = apiUrl.substring(1, apiUrl.length());
         return new URL(flibustaUrl + "/" + apiUrl).openConnection(proxy);
     }
 }
