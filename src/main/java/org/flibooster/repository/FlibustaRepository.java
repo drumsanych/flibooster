@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,9 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Component
 public class FlibustaRepository {
+    private final Logger log = LoggerFactory.getLogger(FlibustaRepository.class);
     private Connection connection;
     @Value("${file.storage}")
     private String fileStorage;
@@ -31,6 +35,7 @@ public class FlibustaRepository {
     public List<Book> searchBooks(String search) throws IOException {
 
         URLConnection flibustaURLConnection = connection.getConnection("booksearch?ask=" + search);
+        log.info("Parsing search response...");
         String htmlResponse = getHTMLResponse(flibustaURLConnection);
 
         Map<String, String[]> parsedRows = getParsedRows(htmlResponse);
@@ -46,6 +51,7 @@ public class FlibustaRepository {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        log.info(flibustaURLConnection + " parsed");
         return sb.toString();
     }
     private Map<String, String[]> getParsedRows(String htmlResponse) {
@@ -76,19 +82,26 @@ public class FlibustaRepository {
     }
 
     private List<Book> collectLinks(Map<String, String[]> parsedRows) throws IOException {
-        List<Book> bookList = new ArrayList<>();
-        for (Map.Entry<String, String[]> entry : parsedRows.entrySet()) {
-            Book bookModelFromLink = getBookModelFromLink(entry.getKey(), entry.getValue());
-            if (bookModelFromLink.hasAnyLink()) {
-                bookList.add(bookModelFromLink);
-            }
-        }
+        List<Book> bookList = parsedRows.entrySet().stream()
+                .parallel()
+                .map(entry -> {
+                    log.info(entry.getKey() + " getting book model");
+                    return getBookModelFromLink(entry.getKey(), entry.getValue());
+                })
+                .filter(book -> book.hasAnyLink())
+                .collect(Collectors.toList());
         return bookList;
     }
 
-    private Book getBookModelFromLink(String href, String[] authorAndTitle) throws IOException {
-        URLConnection bookLinkConnection = connection.getConnection(href);
+    private Book getBookModelFromLink(String href, String[] authorAndTitle) {
+        URLConnection bookLinkConnection = null;
+        try {
+            bookLinkConnection = connection.getConnection(href);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
+        log.info("Collecting files links to book dto: " + authorAndTitle[1]);
         String htmlResponse = getHTMLResponse(bookLinkConnection);
         Document doc = Jsoup.parse(htmlResponse);
         Book book = new Book();
@@ -105,7 +118,11 @@ public class FlibustaRepository {
                     if (text.contains("epub")) epub.set(el.attr("href"));
                     if (text.contains("mobi")) mobi.set(el.attr("href"));
                 });
-        if (authorAndTitle[0] != null) book.setAuthor(authorAndTitle[0]);
+        if (authorAndTitle[0] != null) {
+            book.setAuthor(authorAndTitle[0]);
+        } else {
+            book.setAuthor("");
+        }
         book.setTitle(authorAndTitle[1]);
         book.setPdf(pdf.get());
         book.setFb2(fb2.get());

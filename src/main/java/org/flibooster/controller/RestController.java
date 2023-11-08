@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.flibooster.exceptions.EmptyBooksListException;
 import org.flibooster.model.Book;
 import org.flibooster.services.interfaces.FlibustaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -20,15 +22,18 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/")
 public class RestController {
-
+    private final Logger log = LoggerFactory.getLogger(RestController.class);
     private FlibustaService flibustaService;
 
     @GetMapping("/search")
     public ResponseEntity<List<Book>> getBook(@RequestParam("search") String search) throws EmptyBooksListException, IOException {
+        log.info("New search request: " + search);
         List<Book> booksList = flibustaService.getBooksList(search);
+
         if (booksList.isEmpty()) {
             throw new EmptyBooksListException();
         }
+        log.info("Books collection sent!");
         return new ResponseEntity<>(booksList, HttpStatus.OK);
     }
 
