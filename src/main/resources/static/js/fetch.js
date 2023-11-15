@@ -1,34 +1,47 @@
 let index = 0;
 let cardsRendered = 0;
 let responseJson;
-
 function sendGetRequest() {
     const searchQuery = document.getElementById("searchInput").value;
-
+    hideStuff('booksTab');
+    index = 0;
+    cardsRendered = 0;
 
     const xhr = new XMLHttpRequest();
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            index = 0;
+
+
 
             responseJson = JSON.parse(xhr.responseText);
             console.log(responseJson)
             showStuff('booksTab');
 
             drawCard(document.getElementById("container1"), responseJson[index].author, responseJson[index].title, responseJson[index].pdf, responseJson[index].fb2, responseJson[index].epub, responseJson[index].mobi);
-            drawCard(document.getElementById("container2"), responseJson[index].author, responseJson[index].title, responseJson[index].pdf, responseJson[index].fb2, responseJson[index].epub, responseJson[index].mobi);
-            drawCard(document.getElementById("container3"), responseJson[index].author, responseJson[index].title, responseJson[index].pdf, responseJson[index].fb2, responseJson[index].epub, responseJson[index].mobi);
-
+            if (responseJson.length > index) {
+                drawCard(document.getElementById("container2"), responseJson[index].author, responseJson[index].title, responseJson[index].pdf, responseJson[index].fb2, responseJson[index].epub, responseJson[index].mobi);
+            } else {
+                document.getElementById("container2").innerHTML = '';
+            }
+            if (responseJson.length > index) {
+                drawCard(document.getElementById("container3"), responseJson[index].author, responseJson[index].title, responseJson[index].pdf, responseJson[index].fb2, responseJson[index].epub, responseJson[index].mobi);
+            } else {
+                document.getElementById("container3").innerHTML = '';
+            }
             console.log('rendered: ' + cardsRendered);
             console.log('current index: ' + index);
 
         } else {
-            console.error("Произошла ошибка при выполнении запроса");
+            alert("Ничего не найдено");
         }
+
+        console.log('hide spinner')
+        hideSpinner();
     };
 
     xhr.open("GET", "/api/search?search=" + searchQuery, true);
+    showSpinner();
     xhr.send();
 }
 
@@ -44,13 +57,15 @@ document.getElementById('searchInput').addEventListener('keydown', function (eve
     }
 });
 
-function showStuff(id, text) {
+function showStuff(id) {
     document.getElementById(id).style.visibility = 'visible';
-
-
+}
+function hideStuff(id) {
+    // document.getElementById(id).innerHTML = '';
 }
 
-function forward() {
+function forward(event) {
+    event.preventDefault();
     if (cardsRendered == 3) {
         cardsRendered = 0;
         if (index <= responseJson.length) {
@@ -74,7 +89,8 @@ function forward() {
     }
 }
 
-function back() {
+function back(event) {
+    event.preventDefault();
     if (index > 3) {
         index = index - 3 - cardsRendered;
         console.log('index before rendering: ' + index);
@@ -99,15 +115,14 @@ function drawCard(element, author, title, pdf, fb2, epub, mobi) {
     element.innerHTML +=
         '<div class="u-container-layout u-similar-container u-container-layout-1">\n' +
         '<img alt="" class="custom-expanded u-image u-image-contain u-image-default u-image-1" data-image-width="512" data-image-height="512" src="/images/free-icon-spellbook-7778743.png">\n' +
-        '<h4 class="u-custom-font u-text u-text-default u-text-1">' + author + '</h4>\n' +
-        '  <p class="u-custom-font u-text u-text-default u-text-2">' + title + '</p>\n' +
         '<img id="pdfImg' + index + '" style="visibility: hidden" class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-7" src="/images/icons8-pdf-2-50-2.png" alt="" data-image-width="50" data-image-height="50" onclick="openLink(\'' + pdf + '\')">\n' +
         '<img id="epubImg' + index + '" style="visibility: hidden" class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-3" src="/images/icons8-epub-50-2.png" alt="" data-image-width="50" data-image-height="50" onclick="openLink(\'' + epub + '\')">\n' +
         '<img id="fb2Img' + index + '" style="visibility: hidden" class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-4" src="/images/icons8-fb-2-50-2.png" alt="" data-image-width="50" data-image-height="50" onclick="openLink(\'' + fb2 + '\')">\n' +
         '<img id="mobiImg' + index + '" style="visibility: hidden" class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-5" src="/images/icons8-mobi-50-2.png" alt="" data-image-width="50" data-image-height="50" onclick="openLink(\'' + mobi + '\')">\n' +
+        '<h4 class="u-custom-font u-text u-text-default u-text-1">' + author + '</h4>\n' +
+        '  <p class="u-custom-font u-text u-text-default u-text-2">' + title + '</p>\n' +
         '</div>'
 
-    console.log('Готовимся рисовать иконки файлов для скачивания:' + pdf + ' ' + fb2 + ' ' + epub + ' ' + mobi);
     if (pdf != null) {
         document.getElementById("pdfImg" + index).style.visibility = 'visible';
         document.getElementById("pdfImg" + index).setAttribute('href', pdf);
@@ -129,6 +144,7 @@ function drawCard(element, author, title, pdf, fb2, epub, mobi) {
 }
 
 function openLink(link) {
+    showSpinner()
     fetch("/api/download?href=" + link, {
         method: "GET",
         headers: {
@@ -139,6 +155,7 @@ function openLink(link) {
             if (!response.ok) {
                 throw new Error("Ошибка при скачивании файла");
             }
+            hideSpinner();
             const contentDisposition = response.headers.get("content-disposition");
             const fileName = contentDisposition.split("filename=")[1];
 
@@ -154,4 +171,11 @@ function openLink(link) {
         .catch(error => {
             console.error("Произошла ошибка:", error);
         });
+}
+
+function showSpinner() {
+    document.getElementById('spinner').style.visibility = 'visible';
+}
+function hideSpinner() {
+    document.getElementById('spinner').style.visibility = 'hidden';
 }
