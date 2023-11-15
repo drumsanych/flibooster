@@ -11,7 +11,7 @@
 .u-section-1 .u-repeater-1 {
   grid-template-columns: calc(33.3333% - 6.66667px) calc(33.3333% - 6.66667px) calc(33.3333% - 6.66667px);
   grid-gap: 10px 10px;
-  min-height: 503px;
+  min-height: 700px;
 }
 
 .u-section-1 .u-list-item-1 {
@@ -34,7 +34,7 @@
   text-transform: uppercase;
   font-size: 1.25rem;
   font-weight: normal;
-  margin: 7px auto 0;
+  margin: 20px auto 0;
 }
 
 .u-section-1 .u-text-2 {

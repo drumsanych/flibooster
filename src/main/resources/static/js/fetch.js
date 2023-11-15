@@ -64,7 +64,8 @@ function hideStuff(id) {
     // document.getElementById(id).innerHTML = '';
 }
 
-function forward() {
+function forward(event) {
+    event.preventDefault();
     if (cardsRendered == 3) {
         cardsRendered = 0;
         if (index <= responseJson.length) {
@@ -88,7 +89,8 @@ function forward() {
     }
 }
 
-function back() {
+function back(event) {
+    event.preventDefault();
     if (index > 3) {
         index = index - 3 - cardsRendered;
         console.log('index before rendering: ' + index);
@@ -113,12 +115,12 @@ function drawCard(element, author, title, pdf, fb2, epub, mobi) {
     element.innerHTML +=
         '<div class="u-container-layout u-similar-container u-container-layout-1">\n' +
         '<img alt="" class="custom-expanded u-image u-image-contain u-image-default u-image-1" data-image-width="512" data-image-height="512" src="/images/free-icon-spellbook-7778743.png">\n' +
-        '<h4 class="u-custom-font u-text u-text-default u-text-1">' + author + '</h4>\n' +
-        '  <p class="u-custom-font u-text u-text-default u-text-2">' + title + '</p>\n' +
         '<img id="pdfImg' + index + '" style="visibility: hidden" class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-7" src="/images/icons8-pdf-2-50-2.png" alt="" data-image-width="50" data-image-height="50" onclick="openLink(\'' + pdf + '\')">\n' +
         '<img id="epubImg' + index + '" style="visibility: hidden" class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-3" src="/images/icons8-epub-50-2.png" alt="" data-image-width="50" data-image-height="50" onclick="openLink(\'' + epub + '\')">\n' +
         '<img id="fb2Img' + index + '" style="visibility: hidden" class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-4" src="/images/icons8-fb-2-50-2.png" alt="" data-image-width="50" data-image-height="50" onclick="openLink(\'' + fb2 + '\')">\n' +
         '<img id="mobiImg' + index + '" style="visibility: hidden" class="u-hover-feature u-image u-image-contain u-image-default u-preserve-proportions u-image-5" src="/images/icons8-mobi-50-2.png" alt="" data-image-width="50" data-image-height="50" onclick="openLink(\'' + mobi + '\')">\n' +
+        '<h4 class="u-custom-font u-text u-text-default u-text-1">' + author + '</h4>\n' +
+        '  <p class="u-custom-font u-text u-text-default u-text-2">' + title + '</p>\n' +
         '</div>'
 
     if (pdf != null) {
